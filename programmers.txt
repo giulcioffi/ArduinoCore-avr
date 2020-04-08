@@ -113,3 +113,4 @@ atmel_ice.protocol=atmelice_isp
 atmel_ice.program.protocol=atmelice_isp
 atmel_ice.program.tool=avrdude
 atmel_ice.program.extra_params=-Pusb
+atmel_ice.program.extra_params=-Pusb
