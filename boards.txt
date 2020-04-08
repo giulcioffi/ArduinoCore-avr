@@ -1,6 +1,6 @@
 # See: http://code.google.com/p/arduino/wiki/Platforms
 
-menu.cpu=Processor
+menu.cpu=Processorz
 
 ##############################################################
 
