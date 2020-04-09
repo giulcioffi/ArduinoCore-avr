@@ -510,7 +510,7 @@ bool SendDescriptor(USBSetup& setup)
 
 	InitControl(setup.wLength);
 #ifdef PLUGGABLE_USB_ENABLED
-	int ret = PluggableUSB().getDescriptor(setup);
+	ret = PluggableUSB().getDescriptor(setup);
 	if (ret != 0) {
 		return (ret > 0 ? true : false);
 	}
@@ -860,11 +860,6 @@ bool USBDevice_::wakeupHost()
 	}
 
 	return false;
-}
-
-bool USBDevice_::isSuspended()
-{
-	return (_usbSuspendState & (1 << SUSPI));
 }
 
 

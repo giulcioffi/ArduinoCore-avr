@@ -60,19 +60,11 @@ extern "C"{
 #define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
 #define microsecondsToClockCycles(a) ( (a) * clockCyclesPerMicrosecond() )
 
-//#define lowByte(w) ((uint8_t) ((w) & 0xff))
-//#define highByte(w) ((uint8_t) ((w) >> 8))
-
-//#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-//#define bitSet(value, bit) ((value) |= (1UL << (bit)))
-//#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-//#define bitToggle(value, bit) ((value) ^= (1UL << (bit)))
-//#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
-
 // avr-libc defines _NOP() since 1.6.2
 #ifndef _NOP
 #define _NOP() do { __asm__ volatile ("nop"); } while (0)
 #endif
+
 
 // Get the bit location within the hardware port of the given virtual pin.
 // This comes from the pins_*.c file for the active board configuration.
