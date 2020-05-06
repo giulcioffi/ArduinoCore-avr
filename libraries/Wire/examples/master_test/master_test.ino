@@ -1,17 +1,10 @@
-// Wire Master Reader
-// by Nicholas Zambetti <http://www.zambetti.com>
+// Wire Master Test
 
-// Demonstrates use of the Wire library
-// Reads data from an I2C/TWI slave device
-// Refer to the "Wire Slave Sender" example for use with this
-
-// Created 29 March 2006
-
-// This example code is in the public domain.
-
+// It simulates a Wire Master
+// It tries 10 reads from an I2C/TWI slave device
+// It tries 10 writes to an I2C/TWI slave device
 
 #include <Wire.h>
-#include <ATF2.h>
 
 unsigned long elapsed_time;
 int num_bytes;
@@ -21,13 +14,15 @@ byte x = 0;
 void setup() {
   Wire.begin();        // join i2c bus (address optional for master)
   Serial.begin(9600);  // start serial for output
-  num_bytes = 4;
-
-  for (i=0; i<20; i++) {
+  num_bytes = 1;
+  Wire.setWireTimeoutUs(25000);
+  
+  for (i=0; i<10; i++) {
     tryRead();
+    num_bytes++;
   }
 
-  for (i=0; i<100; i++) {
+  for (i=0; i<10; i++) {
     tryWrite();
   }
 }
@@ -47,17 +42,14 @@ void tryRead() {
     char c = Wire.read(); // receive a byte as character
     Serial.print(c);         // print the character
   }
+  Serial.println();
 
   Serial.print("Master completed the read @ time: ");
   elapsed_time = millis();
   Serial.println(elapsed_time);
   Serial.println();
 
-  if (num_bytes == 7)
-    num_bytes = 4;
-  else
-    num_bytes++;
-  delay(500);
+  delay(3000);
 }
 
 
@@ -81,7 +73,7 @@ void tryWrite() {
   Serial.println();
 
   x++;
-  delay(500);
+  delay(3000);
 }
 
 void loop() {
