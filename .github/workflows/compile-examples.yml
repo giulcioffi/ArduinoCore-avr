@@ -1,0 +1,99 @@
+name: Compile Examples
+
+on: [pull_request, push]
+
+jobs:
+  compile-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        fqbn: [
+          #"arduino:avr:yun",
+          "arduino:avr:uno" #,
+          #"arduino:avr:diecimila",
+          #"arduino:avr:nano",
+          #"arduino:avr:mega",
+          #"arduino:avr:megaADK",
+          #"arduino:avr:leonardo",
+          #"arduino:avr:leonardoeth",
+          #"arduino:avr:micro",
+          #"arduino:avr:esplora",
+          #"arduino:avr:mini",
+          #"arduino:avr:ethernet",
+          #"arduino:avr:fio",
+          #"arduino:avr:bt",
+          #"arduino:avr:LilyPadUSB",
+          #"arduino:avr:lilypad",
+          #"arduino:avr:pro",
+          #"arduino:avr:atmegang",
+          #"arduino:avr:robotControl",
+          #"arduino:avr:robotMotor",
+          #"arduino:avr:gemma",
+          #"arduino:avr:circuitplay32u4cat",
+          #"arduino:avr:yunmini",
+          #"arduino:avr:chiwawa",
+          #"arduino:avr:one",
+          #"arduino:avr:unowifi"
+        ]
+        #test: [
+        #  "AIO_LED_Pot" ,
+        #  "FONAtest",
+        #  "IsMegunoLinkConnected"
+        #]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # The source files are in a subfolder of the ArduinoCore-API repository, so it's not possible to clone it directly to the final destination in the core
+      #- name: Checkout ArduinoCore-API
+      #  uses: actions/checkout@v2
+      #  with:
+      #    repository: arduino/ArduinoCore-API
+      #    path: extras/ArduinoCore-API
+
+      #- name: Install ArduinoCore-API
+      #  run: mv "$GITHUB_WORKSPACE/extras/ArduinoCore-API/api" "$GITHUB_WORKSPACE/cores/arduino"
+
+      #- name: Checkout Adafruit WiFiNINA
+      #  uses: actions/checkout@v2
+      #  with:
+      #    repository: adafruit/WiFiNINA
+      #    path: libraries/WiFiNINA      
+
+      - name: Compile examples
+        uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
+        with:
+          fqbn: ${{ matrix.fqbn }}
+          #libraries: |
+          #  - name: Adafruit IO Arduino
+          #    version: 3.6.0
+          #  - name: Adafruit MQTT Library
+          #    version: 1.0.3
+          #  - name: ArduinoHttpClient
+          #    version: 0.4.0
+          #  - name: Adafruit FONA Library
+          #    version: 1.3.6
+            # Don't use library manager WiFiNINA
+            #  - name: WiFiNINA
+            #  version: 1.4.0
+          #  - name: MegunoLink
+          platforms: |
+            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
+            - name: "arduino:avr"
+            # Overwrite the Board Manager installation with the local platform
+            - source-path: "./"
+              name: "arduino:avr"
+          #sketch-paths: '"extras/AIO_LED_Pot" "/github/home/Arduino/libraries/Adafruit_FONA_Library/examples/FONAtest" "/github/home/Arduino/libraries/MegunoLink/examples/InterfacePanel/IsMegunoLinkConnected"'
+          sketch-paths: "libraries"
+          #size-report-sketch: ${{ matrix.test }}
+          #enable-size-deltas-report: 'true'
+          verbose: 'true'
+
+      #- name: Save memory usage change report as artifact
+      #  if: github.event_name == 'pull_request'
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: 'size-deltas-reports'
+      #    path: 'size-deltas-reports'
