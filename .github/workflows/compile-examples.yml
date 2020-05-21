@@ -66,7 +66,8 @@ jobs:
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
           fqbn: ${{ matrix.fqbn }}
-          #libraries: |
+          libraries: |
+            - name: MFRC522       
           #  - name: Adafruit IO Arduino
           #    version: 3.6.0
           #  - name: Adafruit MQTT Library
@@ -86,7 +87,7 @@ jobs:
             - source-path: "./"
               name: "arduino:avr"
           #sketch-paths: '"extras/AIO_LED_Pot" "/github/home/Arduino/libraries/Adafruit_FONA_Library/examples/FONAtest" "/github/home/Arduino/libraries/MegunoLink/examples/InterfacePanel/IsMegunoLinkConnected"'
-          sketch-paths: "libraries"
+          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples"'
           #size-report-sketch: ${{ matrix.test }}
           #enable-size-deltas-report: 'true'
           verbose: 'true'
