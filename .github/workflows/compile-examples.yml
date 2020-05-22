@@ -87,7 +87,7 @@ jobs:
             - source-path: "./"
               name: "arduino:avr"
           #sketch-paths: '"extras/AIO_LED_Pot" "/github/home/Arduino/libraries/Adafruit_FONA_Library/examples/FONAtest" "/github/home/Arduino/libraries/MegunoLink/examples/InterfacePanel/IsMegunoLinkConnected"'
-          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples"'
+          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
           #size-report-sketch: ${{ matrix.test }}
           #enable-size-deltas-report: 'true'
           verbose: 'true'
