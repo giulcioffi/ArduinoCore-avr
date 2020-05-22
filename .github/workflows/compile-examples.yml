@@ -10,10 +10,10 @@ jobs:
       matrix:
         fqbn: [
           #"arduino:avr:yun",
-          "arduino:avr:uno" #,
+          #"arduino:avr:uno" #,
           #"arduino:avr:diecimila",
           #"arduino:avr:nano",
-          #"arduino:avr:mega",
+          "arduino:avr:mega",
           #"arduino:avr:megaADK",
           #"arduino:avr:leonardo",
           #"arduino:avr:leonardoeth",
