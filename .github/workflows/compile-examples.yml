@@ -67,7 +67,12 @@ jobs:
         with:
           fqbn: ${{ matrix.fqbn }}
           libraries: |
-            - name: MFRC522       
+            - name: MFRC522
+            - name: Keyboard
+            - name: Mouse
+            - name: Servo
+            - name: LiquidCrystal
+            - name: CapacitiveSensor
           #  - name: Adafruit IO Arduino
           #    version: 3.6.0
           #  - name: Adafruit MQTT Library
