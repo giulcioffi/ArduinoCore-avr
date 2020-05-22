@@ -9,33 +9,33 @@ jobs:
     strategy:
       matrix:
         fqbn: [
-          "arduino:avr"
-          #"arduino:avr:yun",
-          #"arduino:avr:uno",
-          #"arduino:avr:diecimila",
-          #"arduino:avr:nano",
-          #"arduino:avr:mega" #,
-          #"arduino:avr:megaADK",
-          #"arduino:avr:leonardo",
-          #"arduino:avr:leonardoeth",
-          #"arduino:avr:micro",
-          #"arduino:avr:esplora",
-          #"arduino:avr:mini",
-          #"arduino:avr:ethernet",
-          #"arduino:avr:fio",
-          #"arduino:avr:bt",
-          #"arduino:avr:LilyPadUSB",
-          #"arduino:avr:lilypad",
-          #"arduino:avr:pro",
-          #"arduino:avr:atmegang",
-          #"arduino:avr:robotControl",
-          #"arduino:avr:robotMotor",
+          #"arduino:avr"
+          "arduino:avr:yun",
+          "arduino:avr:uno",
+          "arduino:avr:diecimila",
+          "arduino:avr:nano",
+          "arduino:avr:mega",
+          "arduino:avr:megaADK",
+          "arduino:avr:leonardo",
+          "arduino:avr:leonardoeth",
+          "arduino:avr:micro",
+          "arduino:avr:esplora",
+          "arduino:avr:mini",
+          "arduino:avr:ethernet",
+          "arduino:avr:fio",
+          "arduino:avr:bt",
+          "arduino:avr:LilyPadUSB",
+          "arduino:avr:lilypad",
+          "arduino:avr:pro",
+          "arduino:avr:atmegang",
+          "arduino:avr:robotControl",
+          "arduino:avr:robotMotor",
           #"arduino:avr:gemma",
-          #"arduino:avr:circuitplay32u4cat",
-          #"arduino:avr:yunmini",
-          #"arduino:avr:chiwawa",
-          #"arduino:avr:one",
-          #"arduino:avr:unowifi"
+          "arduino:avr:circuitplay32u4cat",
+          "arduino:avr:yunmini",
+          "arduino:avr:chiwawa",
+          "arduino:avr:one",
+          "arduino:avr:unowifi"
         ]
         #test: [
         #  "AIO_LED_Pot" ,
@@ -63,10 +63,10 @@ jobs:
       #    repository: adafruit/WiFiNINA
       #    path: libraries/WiFiNINA      
 
-      - name: Compile examples board Uno
+      - name: Compile examples
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
-          fqbn: "arduino:avr:uno" # ${{ matrix.fqbn }}
+          fqbn: ${{ matrix.fqbn }}
           libraries: |
             - name: MFRC522
             - name: Keyboard
@@ -74,18 +74,6 @@ jobs:
             - name: Servo
             - name: LiquidCrystal
             - name: CapacitiveSensor
-          #  - name: Adafruit IO Arduino
-          #    version: 3.6.0
-          #  - name: Adafruit MQTT Library
-          #    version: 1.0.3
-          #  - name: ArduinoHttpClient
-          #    version: 0.4.0
-          #  - name: Adafruit FONA Library
-          #    version: 1.3.6
-            # Don't use library manager WiFiNINA
-            #  - name: WiFiNINA
-            #  version: 1.4.0
-          #  - name: MegunoLink
           platforms: |
             # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
             - name: "arduino:avr"
@@ -93,12 +81,12 @@ jobs:
             - source-path: "./"
               name: "arduino:avr"
           #sketch-paths: '"extras/AIO_LED_Pot" "/github/home/Arduino/libraries/Adafruit_FONA_Library/examples/FONAtest" "/github/home/Arduino/libraries/MegunoLink/examples/InterfacePanel/IsMegunoLinkConnected"'
-          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples/01.Basics"'
+          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
           #size-report-sketch: ${{ matrix.test }}
           #enable-size-deltas-report: 'true'
           verbose: 'true'
 
-      - name: Compile examples board Mega
+      - name: Compile examples only for board Mega
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
           fqbn: "arduino:avr:mega" # ${{ matrix.fqbn }}
@@ -109,20 +97,8 @@ jobs:
             - name: Servo
             - name: LiquidCrystal
             - name: CapacitiveSensor
-          #  - name: Adafruit IO Arduino
-          #    version: 3.6.0
-          #  - name: Adafruit MQTT Library
-          #    version: 1.0.3
-          #  - name: ArduinoHttpClient
-          #    version: 0.4.0
-          #  - name: Adafruit FONA Library
-          #    version: 1.3.6
-            # Don't use library manager WiFiNINA
-            #  - name: WiFiNINA
-            #  version: 1.4.0
-          #  - name: MegunoLink
           #sketch-paths: '"extras/AIO_LED_Pot" "/github/home/Arduino/libraries/Adafruit_FONA_Library/examples/FONAtest" "/github/home/Arduino/libraries/MegunoLink/examples/InterfacePanel/IsMegunoLinkConnected"'
-          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples/04.Communication"'
+          sketch-paths: "extras/shared/MultiSerial"
           #size-report-sketch: ${{ matrix.test }}
           #enable-size-deltas-report: 'true'
           verbose: 'true'
