@@ -6,50 +6,76 @@ jobs:
   compile-test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        fqbn: [
-          "arduino:avr:yun",
-          "arduino:avr:uno",
-          "arduino:avr:diecimila",
-          "arduino:avr:nano",
-          "arduino:avr:mega",
-          "arduino:avr:megaADK",
-          "arduino:avr:leonardo",
-          "arduino:avr:leonardoeth",
-          "arduino:avr:micro",
-          "arduino:avr:esplora",
-          "arduino:avr:mini",
-          "arduino:avr:ethernet",
-          "arduino:avr:fio",
-          "arduino:avr:bt",
-          "arduino:avr:LilyPadUSB",
-          "arduino:avr:lilypad",
-          "arduino:avr:pro",
-          #"arduino:avr:atmegang",
-          #"arduino:avr:robotControl",
-          #"arduino:avr:robotMotor",
-          #"arduino:avr:gemma",
-          "arduino:avr:circuitplay32u4cat",
-          "arduino:avr:yunmini",
-          "arduino:avr:chiwawa",
-          "arduino:avr:one",
-          "arduino:avr:unowifi"
-        ]
-        #test: [
-        #  "AIO_LED_Pot" ,
-        #  "FONAtest",
-        #  "IsMegunoLinkConnected"
-        #]
+    env:
+      # libraries to install for all boards
+      UNIVERSAL_LIBRARIES: '"MFRC522" "Keyboard" "Mouse" "Servo" "LiquidCrystal" "CapacitiveSensor"'
+      # sketch paths to compile (recursive) for all boards
+      UNIVERSAL_SKETCH_PATHS: '"/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
 
+    strategy:
+      fail-fast: false
+
+      matrix:
+        board: [
+          {"fqbn": "arduino:avr:yun", "type": "usb"},
+          {"fqbn": "arduino:avr:uno", "type": "normal"},
+          {"fqbn": "arduino:avr:diecimila", "type": "normal"},
+          {"fqbn": "arduino:avr:nano", "type": "normal"},
+          {"fqbn": "arduino:avr:mega", "type": "MultiSerial"},
+          {"fqbn": "arduino:avr:megaADK", "type": "MultiSerial"},
+          {"fqbn": "arduino:avr:leonardo", "type": "usb"},
+          {"fqbn": "arduino:avr:leonardoeth", "type": "usb"},
+          {"fqbn": "arduino:avr:micro", "type": "usb"},
+          {"fqbn": "arduino:avr:esplora", "type": "usb"},
+          {"fqbn": "arduino:avr:mini", "type": "normal"},
+          {"fqbn": "arduino:avr:ethernet", "type": "normal"},
+          {"fqbn": "arduino:avr:fio", "type": "normal"},
+          {"fqbn": "arduino:avr:bt", "type": "normal"},
+          {"fqbn": "arduino:avr:LilyPadUSB", "type": "usb"},
+          {"fqbn": "arduino:avr:lilypad", "type": "normal"},
+          {"fqbn": "arduino:avr:pro", "type": "normal"},
+          #"arduino:avr:atmegang",
+          {"fqbn": "arduino:avr:robotControl", "type": "control"},
+          {"fqbn": "arduino:avr:robotMotor", "type": "control"},
+          #"arduino:avr:gemma",
+          {"fqbn": "arduino:avr:circuitplay32u4cat", "type": "usb"},
+          {"fqbn": "arduino:avr:yunmini", "type": "usb"},
+          {"fqbn": "arduino:avr:chiwawa", "type": "usb"},
+          {"fqbn": "arduino:avr:one", "type": "usb"},
+          {"fqbn": "arduino:avr:unowifi", "type": "normal"}
+        ]
+
+        # make board type-specific customizations to the matrix jobs
+        include:
+          # normal boards
+          - board:
+              type: "normal"
+            #libraries: '"ArduinoBearSSL" "ArduinoECCX08" "RTCZero" "WiFi101" "WiFiNINA"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay"'
+          # MultiSerial boards
+          - board:
+              type: "MultiSerial"
+            #libraries: '"ArduinoBearSSL" "ArduinoECCX08" "RTCZero" "WiFi101" "WiFiNINA"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough"'
+          # USB boards
+          - board:
+              type: "usb"
+            #libraries: '"ArduinoBearSSL" "ArduinoECCX08" "RTCZero" "WiFi101" "WiFiNINA"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "extras/shared/09.USB"'
+          # RobotMotorControl boards
+          - board:
+              type: "control"
+            #libraries: '"ArduinoBearSSL" "ArduinoECCX08" "RTCZero" "WiFi101" "WiFiNINA"'
+            additional-sketch-paths: '"libraries/Wire" "libraries/SPI" "libraries/EEPROM" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "extras/shared/09.USB"'
+          
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2     
 
       - name: Compile examples
-        uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
+        uses: arduino/actions/libraries/compile-examples@master
         with:
-          fqbn: ${{ matrix.fqbn }}
+          fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - name: MFRC522
             - name: Keyboard
@@ -57,123 +83,11 @@ jobs:
             - name: Servo
             - name: LiquidCrystal
             - name: CapacitiveSensor
-          platforms: |
+          #platforms: |
             # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
-            - name: "arduino:avr"
+          #  - name: "arduino:avr"
             # Overwrite the Board Manager installation with the local platform
-            - source-path: "./"
-              name: "arduino:avr"
-          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay"'
-          verbose: 'true'
-
-  compile-test-MultiSerial:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        fqbn_MultiSerial: [
-          "arduino:avr:mega",
-          "arduino:avr:megaADK"
-        ]
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Compile examples for MultiSerial
-        uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
-        with:
-          fqbn: ${{ matrix.fqbn_MultiSerial }}
-          libraries: |
-            - name: MFRC522
-            - name: Keyboard
-            - name: Mouse
-            - name: Servo
-            - name: LiquidCrystal
-            - name: CapacitiveSensor
-          platforms: |
-            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
-            - name: "arduino:avr"
-            # Overwrite the Board Manager installation with the local platform
-            - source-path: "./"
-              name: "arduino:avr"
-          sketch-paths: '"extras/shared/MultiSerial" "extras/shared/SerialPassthrough"'
-          verbose: 'true'
-
-  compile-test-USB:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        fqbn_USB: [
-          "arduino:avr:yun",
-          "arduino:avr:leonardo",
-          "arduino:avr:leonardoeth",
-          "arduino:avr:micro",
-          "arduino:avr:esplora",
-          "arduino:avr:LilyPadUSB",
-          "arduino:avr:robotControl",
-          "arduino:avr:robotMotor",
-          "arduino:avr:circuitplay32u4cat",
-          "arduino:avr:yunmini",
-          "arduino:avr:chiwawa",
-          "arduino:avr:one"
-        ]
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Compile examples for USB
-        uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
-        with:
-          fqbn: ${{ matrix.fqbn_USB }}
-          libraries: |
-            - name: MFRC522
-            - name: Keyboard
-            - name: Mouse
-            - name: Servo
-            - name: LiquidCrystal
-            - name: CapacitiveSensor
-          platforms: |
-            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
-            - name: "arduino:avr"
-            # Overwrite the Board Manager installation with the local platform
-            - source-path: "./"
-              name: "arduino:avr"
-          sketch-paths: '"extras/shared/09.USB" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough"'
-          verbose: 'true'
-
-  compile-test-robotControlMotor:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        fqbn_robot: [
-          "arduino:avr:robotControl",
-          "arduino:avr:robotMotor"
-        ]
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Compile examples for boards Arduinot robot Control and Motor
-        uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
-        with:
-          fqbn: ${{ matrix.fqbn_robot }}
-          libraries: |
-            - name: MFRC522
-            - name: Keyboard
-            - name: Mouse
-            - name: Servo
-            - name: LiquidCrystal
-            - name: CapacitiveSensor
-          platforms: |
-            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
-            - name: "arduino:avr"
-            # Overwrite the Board Manager installation with the local platform
-            - source-path: "./"
-              name: "arduino:avr"
-          sketch-paths: '"libraries/Wire" "libraries/SPI" "libraries/EEPROM" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
+          #  - source-path: "./"
+          #    name: "arduino:avr"
+          sketch-paths: "${{ env.UNIVERSAL_SKETCH_PATHS }} ${{ matrix.additional-sketch-paths }}"
           verbose: 'true'
