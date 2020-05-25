@@ -27,8 +27,8 @@ jobs:
           "arduino:avr:lilypad",
           "arduino:avr:pro",
           #"arduino:avr:atmegang",
-          "arduino:avr:robotControl",
-          "arduino:avr:robotMotor",
+          #"arduino:avr:robotControl",
+          #"arduino:avr:robotMotor",
           #"arduino:avr:gemma",
           "arduino:avr:circuitplay32u4cat",
           "arduino:avr:yunmini",
@@ -63,7 +63,7 @@ jobs:
             # Overwrite the Board Manager installation with the local platform
             - source-path: "./"
               name: "arduino:avr"
-          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
+          sketch-paths: '"libraries" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay"'
           verbose: 'true'
 
   compile-test-MultiSerial:
@@ -142,4 +142,38 @@ jobs:
             - source-path: "./"
               name: "arduino:avr"
           sketch-paths: '"extras/shared/09.USB" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough"'
+          verbose: 'true'
+
+  compile-test-robotControlMotor:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        fqbn_robot: [
+          "arduino:avr:robotControl",
+          "arduino:avr:robotMotor"
+        ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Compile examples for boards Arduinot robot Control and Motor
+        uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
+        with:
+          fqbn: ${{ matrix.fqbn_robot }}
+          libraries: |
+            - name: MFRC522
+            - name: Keyboard
+            - name: Mouse
+            - name: Servo
+            - name: LiquidCrystal
+            - name: CapacitiveSensor
+          platforms: |
+            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
+            - name: "arduino:avr"
+            # Overwrite the Board Manager installation with the local platform
+            - source-path: "./"
+              name: "arduino:avr"
+          sketch-paths: '"libraries/Wire" "libraries/SPI" "libraries/EEPROM" "/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
           verbose: 'true'
