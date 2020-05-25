@@ -70,7 +70,13 @@ jobs:
           
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2     
+        uses: actions/checkout@v2    
+
+      - name: Checkout Adafruit WiFiNINA
+        uses: actions/checkout@v2
+        with:
+          repository: adafruit/WiFiNINA
+          path: adafruit/WiFiNINA 
 
       - name: Compile examples
         uses: arduino/actions/libraries/compile-examples@master
@@ -83,6 +89,42 @@ jobs:
             - name: Servo
             - name: LiquidCrystal
             - name: CapacitiveSensor
+            - name: Ethernet
+            - name: ArduinoBearSSL
+            - name: Arduino_APDS9960
+            - name: Servo
+            - name: Arduino_LSM9DS1
+            - name: ArduinoHttpClient
+            - name: NTPClient
+            - name: TFT
+            - name: ArduinoMqttClient
+            - name: Arduino_CRC32
+            - name: Arduino_LSM6DS3
+            - name: Stepper
+            - name: SD
+            - name: WiFi101
+            - name: Arduino_JSON
+            - name: Arduino_HTS221
+            - name: Firmata
+            - name: ArduinoMotorCarrier
+            - name: ArduinoCloudThing
+            - name: Arduino_DebugUtils
+            - name: WiFi Link
+            - name: 9 Axes Motion
+            - name: Arduino_LPS22HB
+            - name: CTC GO MOTIONS
+            - name: ArduinoModbus
+            - name: ArduinoIoTCloudBearSSL
+            - name: ArduinoDMX
+            - name: ArduinoRS485
+            - name: Arduino_OAuth
+            - name: CTC GO CORE
+            - name: WiFi
+            - name: ArduinoMDNS
+            - name: Bridge
+            - name: Temboo
+            - name: ArduinoCloud
+            - name: Madgwick
           #platforms: |
             # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
           #  - name: "arduino:avr"
