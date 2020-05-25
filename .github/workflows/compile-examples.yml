@@ -84,7 +84,7 @@ jobs:
       - name: Compile examples for MultiSerial
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
-          fqbn: ${{ matrix.fqbn_MultiSerial }} #"arduino:avr:mega" # ${{ matrix.fqbn }}
+          fqbn: ${{ matrix.fqbn_MultiSerial }}
           libraries: |
             - name: MFRC522
             - name: Keyboard
@@ -98,7 +98,7 @@ jobs:
             # Overwrite the Board Manager installation with the local platform
             - source-path: "./"
               name: "arduino:avr"
-          sketch-paths: "extras/shared/MultiSerial"
+          sketch-paths: '"extras/shared/MultiSerial" "extras/shared/SerialPassthrough"'
           verbose: 'true'
 
   compile-test-USB:
@@ -125,10 +125,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Compile examples for MultiSerial
+      - name: Compile examples for USB
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
-          fqbn: ${{ matrix.fqbn_USB }} #"arduino:avr:mega" # ${{ matrix.fqbn }}
+          fqbn: ${{ matrix.fqbn_USB }}
           libraries: |
             - name: MFRC522
             - name: Keyboard
@@ -142,5 +142,5 @@ jobs:
             # Overwrite the Board Manager installation with the local platform
             - source-path: "./"
               name: "arduino:avr"
-          sketch-paths: "extras/shared/09.USB"
+          sketch-paths: '"extras/shared/09.USB" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough"'
           verbose: 'true'
