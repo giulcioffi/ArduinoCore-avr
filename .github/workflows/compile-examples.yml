@@ -37,10 +37,6 @@ jobs:
           #"arduino:avr:one",
           #"arduino:avr:unowifi"
         ]
-        fqbn_MultiSerial: [
-          "arduino:avr:mega",
-          "arduino:avr:megaADK"
-        ]
         #test: [
         #  "AIO_LED_Pot" ,
         #  "FONAtest",
@@ -90,11 +86,67 @@ jobs:
           #enable-size-deltas-report: 'true'
           verbose: 'true'
 
-      - name: Compile examples only for board Mega
+      #- name: Compile examples only for board Mega
+      #  uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
+      #  with:
+          #fqbn: ${{ matrix.fqbn_MultiSerial }} #"arduino:avr:mega" # ${{ matrix.fqbn }}
+          #libraries: |
+          #  - name: MFRC522
+          #  - name: Keyboard
+          #  - name: Mouse
+          #  - name: Servo
+          #  - name: LiquidCrystal
+          #  - name: CapacitiveSensor
+          #sketch-paths: "extras/shared/MultiSerial"
+          #    size-report-sketch: ${{ matrix.test }}
+          #     enable-size-deltas-report: 'true'
+          #verbose: 'true'
+
+      #- name: Save memory usage change report as artifact
+      #  if: github.event_name == 'pull_request'
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: 'size-deltas-reports'
+      #    path: 'size-deltas-reports'
+  compile-test-MultiSerial:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        fqbn_MultiSerial: [
+          "arduino:avr:mega",
+          "arduino:avr:megaADK"
+        ]
+        #test: [
+        #  "AIO_LED_Pot" ,
+        #  "FONAtest",
+        #  "IsMegunoLinkConnected"
+        #]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # The source files are in a subfolder of the ArduinoCore-API repository, so it's not possible to clone it directly to the final destination in the core
+      #- name: Checkout ArduinoCore-API
+      #  uses: actions/checkout@v2
+      #  with:
+      #    repository: arduino/ArduinoCore-API
+      #    path: extras/ArduinoCore-API
+
+      #- name: Install ArduinoCore-API
+      #  run: mv "$GITHUB_WORKSPACE/extras/ArduinoCore-API/api" "$GITHUB_WORKSPACE/cores/arduino"
+
+      #- name: Checkout Adafruit WiFiNINA
+      #  uses: actions/checkout@v2
+      #  with:
+      #    repository: adafruit/WiFiNINA
+      #    path: libraries/WiFiNINA      
+
+      - name: Compile examples for MultiSerial
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
-          #fqbn: ${{ matrix.fqbn_MultiSerial }} #"arduino:avr:mega" # ${{ matrix.fqbn }}
-          fqbn: '"arduino:avr:mega" "arduino:avr:megaADK"'
+          fqbn: ${{ matrix.fqbn_MultiSerial }} #"arduino:avr:mega" # ${{ matrix.fqbn }}
           libraries: |
             - name: MFRC522
             - name: Keyboard
@@ -102,6 +154,12 @@ jobs:
             - name: Servo
             - name: LiquidCrystal
             - name: CapacitiveSensor
+          platforms: |
+            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
+            - name: "arduino:avr"
+            # Overwrite the Board Manager installation with the local platform
+            - source-path: "./"
+              name: "arduino:avr"
           #sketch-paths: '"extras/AIO_LED_Pot" "/github/home/Arduino/libraries/Adafruit_FONA_Library/examples/FONAtest" "/github/home/Arduino/libraries/MegunoLink/examples/InterfacePanel/IsMegunoLinkConnected"'
           sketch-paths: "extras/shared/MultiSerial"
           #size-report-sketch: ${{ matrix.test }}
