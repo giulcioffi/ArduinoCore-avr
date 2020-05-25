@@ -21,7 +21,7 @@ jobs:
           {"fqbn": "arduino:avr:uno", "type": "normal"},
           {"fqbn": "arduino:avr:diecimila", "type": "normal"},
           {"fqbn": "arduino:avr:nano", "type": "normal"},
-          {"fqbn": "arduino:avr:mega", "type": "MultiSerial"},
+          {"fqbn": "arduino:avr:mega", "type": "MultiSerial"},  #:cpu=atmega2560
           {"fqbn": "arduino:avr:megaADK", "type": "MultiSerial"},
           {"fqbn": "arduino:avr:leonardo", "type": "usb"},
           {"fqbn": "arduino:avr:leonardoeth", "type": "usb"},
@@ -61,7 +61,7 @@ jobs:
           - board:
               type: "usb"
             #libraries: '"ArduinoBearSSL" "ArduinoECCX08" "RTCZero" "WiFi101" "WiFiNINA"'
-            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "extras/shared/09.USB"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "extras/shared/09.USB"' # "libs"
           # RobotMotorControl boards
           - board:
               type: "control"
@@ -76,7 +76,73 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: adafruit/WiFiNINA
-          path: adafruit/WiFiNINA 
+          path: adafruit/WiFiNINA
+          
+      - name: Checkout Keyboard
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/Keyboard
+          path: libs/Keyboard
+
+      - name: Checkout Servo
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/Servo
+          path: libs/Servo
+
+      - name: Checkout LiquidCrystal
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/LiquidCrystal
+          path: libs/LiquidCrystal
+
+      - name: Checkout Ethernet
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/Ethernet
+          path: libs/Ethernet
+
+      - name: Checkout CapacitiveSensor
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/CapacitiveSensor
+          path: libs/CapacitiveSensor
+
+      - name: Checkout SD
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/SD
+          path: libs/SD
+
+      - name: Checkout NTPClient
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/NTPClient
+          path: libs/NTPClient
+
+      - name: Checkout WiFi
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/WiFi
+          path: libs/WiFi
+
+      - name: Checkout Firmata
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/Firmata
+          path: libs/Firmata
+
+      - name: Checkout Arduino_LSM9DS1
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/Arduino_LSM9DS1
+          path: libs/Arduino_LSM9DS1
+
+      - name: Checkout Arduino_JSON
+        uses: actions/checkout@v2
+        with:
+          repository: arduino-libraries/Arduino_JSON
+          path: libs/Arduino_JSON
 
       - name: Compile examples
         uses: arduino/actions/libraries/compile-examples@master
