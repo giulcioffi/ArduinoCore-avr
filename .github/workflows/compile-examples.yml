@@ -13,9 +13,9 @@ jobs:
           "arduino:avr:yun",
           "arduino:avr:uno",
           "arduino:avr:diecimila",
-          "arduino:avr:nano" #,
-          #"arduino:avr:mega",
-          #"arduino:avr:megaADK",
+          "arduino:avr:nano",
+          "arduino:avr:mega",
+          "arduino:avr:megaADK" #,
           #"arduino:avr:leonardo",
           #"arduino:avr:leonardoeth",
           #"arduino:avr:micro",
@@ -36,6 +36,10 @@ jobs:
           #"arduino:avr:chiwawa",
           #"arduino:avr:one",
           #"arduino:avr:unowifi"
+        ]
+        fqbn_MultiSerial: [
+          "arduino:avr:mega",
+          "arduino:avr:megaADK"
         ]
         #test: [
         #  "AIO_LED_Pot" ,
@@ -89,7 +93,8 @@ jobs:
       - name: Compile examples only for board Mega
         uses: per1234/actions/libraries/compile-examples@9acb47abcea28afced4d549585b347668eb03eac
         with:
-          fqbn: "arduino:avr:mega" # ${{ matrix.fqbn }}
+          #fqbn: ${{ matrix.fqbn_MultiSerial }} #"arduino:avr:mega" # ${{ matrix.fqbn }}
+          fqbn: '"arduino:avr:mega" "arduino:avr:megaADK"'
           libraries: |
             - name: MFRC522
             - name: Keyboard
