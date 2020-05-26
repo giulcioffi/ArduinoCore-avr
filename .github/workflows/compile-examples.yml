@@ -50,15 +50,15 @@ jobs:
           # normal boards
           - board:
               type: "normal"
-            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "libs" "libsFirmata/examples/StandardFirmataPlus" "libsFirmata/examples/StandardFirmataEthernet" "libsFirmata/examples/StandardFirmata" "libsFirmata/examples/SimpleDigitalFirmata" "libsFirmata/examples/SimpleAnalogFirmata" "libsFirmata/examples/ServoFirmata" "libsFirmata/examples/OldStandardFirmata" "libsFirmata/examples/EchoString" "libsFirmata/examples/AnalogFirmata" "libsFirmata/examples/AllInputsFirmata"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "~/Arduino/libraries/Servo/examples" "~/Arduino/libraries/LiquidCrystal/examples" "~/Arduino/libraries/Ethernet/examples" "~/Arduino/libraries/SD/examples" "~/Arduino/libraries/WiFi/examples" "~/Arduino/libraries/SD/examples" "~/Arduino/libraries/WiFi/examples" ~/Arduino/libraries/Firmata/examples/StandardFirmataPlus" "~/Arduino/libraries/Firmata/examples/StandardFirmataEthernet" "~/Arduino/libraries/Firmata/examples/StandardFirmata" "~/Arduino/libraries/Firmata/examples/SimpleDigitalFirmata" "~/Arduino/libraries/Firmata/examples/SimpleAnalogFirmata" "~/Arduino/libraries/Firmata/examples/ServoFirmata" "~/Arduino/libraries/Firmata/examples/OldStandardFirmata" "~/Arduino/libraries/Firmata/examples/EchoString" "~/Arduino/libraries/Firmata/examples/AnalogFirmata" "~/Arduino/libraries/Firmata/examples/AllInputsFirmata" "~/Arduino/libraries/Arduino_LSM9DS1/examples" "~/Arduino/libraries/Arduino_JSON/examples"'
           # MultiSerial boards
           - board:
               type: "MultiSerial"
-            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "libs" "libsFirmata/examples/StandardFirmataPlus" "libsFirmata/examples/StandardFirmataEthernet" "libsFirmata/examples/StandardFirmata" "libsFirmata/examples/SimpleDigitalFirmata" "libsFirmata/examples/SimpleAnalogFirmata" "libsFirmata/examples/ServoFirmata" "libsFirmata/examples/OldStandardFirmata" "libsFirmata/examples/EchoString" "libsFirmata/examples/AnalogFirmata" "libsFirmata/examples/AllInputsFirmata"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "~/Arduino/libraries/Servo/examples" "~/Arduino/libraries/LiquidCrystal/examples" "~/Arduino/libraries/Ethernet/examples" "~/Arduino/libraries/SD/examples" "~/Arduino/libraries/WiFi/examples" "~/Arduino/libraries/SD/examples" "~/Arduino/libraries/WiFi/examples" ~/Arduino/libraries/Firmata/examples/StandardFirmataPlus" "~/Arduino/libraries/Firmata/examples/StandardFirmataEthernet" "~/Arduino/libraries/Firmata/examples/StandardFirmata" "~/Arduino/libraries/Firmata/examples/SimpleDigitalFirmata" "~/Arduino/libraries/Firmata/examples/SimpleAnalogFirmata" "~/Arduino/libraries/Firmata/examples/ServoFirmata" "~/Arduino/libraries/Firmata/examples/OldStandardFirmata" "~/Arduino/libraries/Firmata/examples/EchoString" "~/Arduino/libraries/Firmata/examples/AnalogFirmata" "~/Arduino/libraries/Firmata/examples/AllInputsFirmata" "~/Arduino/libraries/Arduino_LSM9DS1/examples" "~/Arduino/libraries/Arduino_JSON/examples"'
           # USB boards
           - board:
               type: "usb"
-            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "extras/shared/09.USB" "libs" "libsKeyboard/Keyboard" "libsFirmata/examples/StandardFirmataPlus" "libsFirmata/examples/StandardFirmataEthernet" "libsFirmata/examples/StandardFirmata" "libsFirmata/examples/SimpleDigitalFirmata" "libsFirmata/examples/SimpleAnalogFirmata" "libsFirmata/examples/ServoFirmata" "libsFirmata/examples/OldStandardFirmata" "libsFirmata/examples/EchoString" "libsFirmata/examples/AnalogFirmata" "libsFirmata/examples/AllInputsFirmata"'
+            additional-sketch-paths: '"libraries" "extras/shared/Blink" "extras/shared/BlinkWithoutDelay" "extras/shared/MultiSerial" "extras/shared/SerialPassthrough" "extras/shared/09.USB" "~/Arduino/libraries/Keyboard/examples/Serial" "~/Arduino/libraries/Servo/examples" "~/Arduino/libraries/LiquidCrystal/examples" "~/Arduino/libraries/Ethernet/examples" "~/Arduino/libraries/SD/examples" "~/Arduino/libraries/WiFi/examples" "~/Arduino/libraries/SD/examples" "~/Arduino/libraries/WiFi/examples" ~/Arduino/libraries/Firmata/examples/StandardFirmataPlus" "~/Arduino/libraries/Firmata/examples/StandardFirmataEthernet" "~/Arduino/libraries/Firmata/examples/StandardFirmata" "~/Arduino/libraries/Firmata/examples/SimpleDigitalFirmata" "~/Arduino/libraries/Firmata/examples/SimpleAnalogFirmata" "~/Arduino/libraries/Firmata/examples/ServoFirmata" "~/Arduino/libraries/Firmata/examples/OldStandardFirmata" "~/Arduino/libraries/Firmata/examples/EchoString" "~/Arduino/libraries/Firmata/examples/AnalogFirmata" "~/Arduino/libraries/Firmata/examples/AllInputsFirmata" "~/Arduino/libraries/Arduino_LSM9DS1/examples" "~/Arduino/libraries/Arduino_JSON/examples"'
           # RobotMotorControl boards
           - board:
               type: "control"
@@ -73,66 +73,6 @@ jobs:
         with:
           repository: adafruit/WiFiNINA
           path: adafruit/WiFiNINA
-          
-      - name: Checkout Keyboard
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/Keyboard
-          path: libsKeyboard/Keyboard
-
-      - name: Checkout Servo
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/Servo
-          path: libs/Servo
-
-      - name: Checkout LiquidCrystal
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/LiquidCrystal
-          path: libs/LiquidCrystal
-
-      - name: Checkout Ethernet
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/Ethernet
-          path: libs/Ethernet
-
-      - name: Checkout CapacitiveSensor
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/CapacitiveSensor
-          path: libs/CapacitiveSensor
-
-      - name: Checkout SD
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/SD
-          path: libs/SD
-
-      - name: Checkout WiFi
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/WiFi
-          path: libs/WiFi
-
-      - name: Checkout Firmata
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/Firmata
-          path: libsFirmata
-
-      - name: Checkout Arduino_LSM9DS1
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/Arduino_LSM9DS1
-          path: libs/Arduino_LSM9DS1
-
-      - name: Checkout Arduino_JSON
-        uses: actions/checkout@v2
-        with:
-          repository: arduino-libraries/Arduino_JSON
-          path: libs/Arduino_JSON
 
       - name: Compile examples
         uses: arduino/actions/libraries/compile-examples@master
@@ -140,7 +80,7 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - name: MFRC522
-            - name: Keyboard
+            - source-url: https://github.com/arduino-libraries/Keyboard.git
             - name: Mouse
             - name: Servo
             - name: LiquidCrystal
@@ -181,12 +121,6 @@ jobs:
             - name: Temboo
             - name: ArduinoCloud
             - name: Madgwick
-          #platforms: |
-            # Use Board Manager to install the latest release of Arduino AVR Boards to get the toolchain
-          #  - name: "arduino:avr"
-            # Overwrite the Board Manager installation with the local platform
-          #  - source-path: "./"
-          #    name: "arduino:avr"
           sketch-paths: "${{ env.UNIVERSAL_SKETCH_PATHS }} ${{ matrix.additional-sketch-paths }}"
           #size-report-sketch: 'AnalogReadSerial'
           #enable-size-deltas-report: 'true'
@@ -194,7 +128,7 @@ jobs:
 
       #- name: Save memory usage change report as artifact
       #  if: github.event_name == 'pull_request'
-      #  uses: actions/upload-artifact@v1
+      #  uses: actions/upload-artifact@v2
       #  with:
       #    name: 'size-deltas-reports'
       #    path: 'size-deltas-reports'
