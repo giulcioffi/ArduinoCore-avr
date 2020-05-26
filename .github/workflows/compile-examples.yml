@@ -10,7 +10,7 @@ jobs:
       # libraries to install for all boards
       UNIVERSAL_LIBRARIES: '"MFRC522" "Keyboard" "Mouse" "Servo" "LiquidCrystal" "CapacitiveSensor"'
       # sketch paths to compile (recursive) for all boards
-      UNIVERSAL_SKETCH_PATHS: '"/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples"'
+      UNIVERSAL_SKETCH_PATHS: '"/github/home/Arduino/libraries/MFRC522/examples" "extras/shared/examples" "extras/shared/examples/01.Basics/AnalogReadSerial"'
 
     strategy:
       fail-fast: false
