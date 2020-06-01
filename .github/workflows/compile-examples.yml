@@ -68,16 +68,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2 
 
-      # The source files are in a subfolder of the ArduinoCore-API repository, so it's not possible to clone it directly to the final destination in the core
-      - name: Checkout ArduinoCore-API
-        uses: actions/checkout@v2
-        with:
-          repository: arduino/ArduinoCore-API
-          path: extras/ArduinoCore-API
-
-      - name: Install ArduinoCore-API
-        run: mv "$GITHUB_WORKSPACE/extras/ArduinoCore-API/api" "$GITHUB_WORKSPACE/cores/arduino"   
-
       - name: Checkout Adafruit WiFiNINA
         uses: actions/checkout@v2
         with:
@@ -85,7 +75,7 @@ jobs:
           path: adafruit/WiFiNINA
 
       - name: Compile examples
-        uses: arduino/actions/libraries/compile-examples@master
+        uses: per1234/actions/libraries/compile-examples@08aa4fea12ce229a1def6da8c6ca09e27a4e3dfb
         with:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
@@ -134,20 +124,19 @@ jobs:
             #- source-url: https://github.com/giulcioffi/ArduinoCore-avr.git
             #  version: namespaced_api
             #  source-path: cores/arduino
-          #platforms: |
+          platforms: |
             # Use Board Manager to install the latest release of Arduino megaAVR Boards to get the toolchain
-            #- name: "arduino:avr"
+            - name: "arduino:avr"
             # Overwrite the Board Manager installation with the local platform
-            #- source-path: "./"
-            #  name: "arduino:avr"
+            - source-path: "./"
+              name: "arduino:avr"
           sketch-paths: "${{ env.UNIVERSAL_SKETCH_PATHS }} ${{ matrix.additional-sketch-paths }}"
-          #size-report-sketch: 'AnalogReadSerial'
-          #enable-size-deltas-report: 'true'
+          enable-size-deltas-report: 'true'
           verbose: 'true'
 
-      #- name: Save memory usage change report as artifact
-      #  if: github.event_name == 'pull_request'
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    name: 'size-deltas-reports'
-      #    path: 'size-deltas-reports'
+      - name: Save memory usage change report as artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v1
+        with:
+          name: 'size-deltas-reports'
+          path: 'size-deltas-reports'
