@@ -10,4 +10,4 @@ jobs:
 
     steps:
       - name: Comment size deltas reports to PRs
-        uses: arduino/actions/libraries/report-size-deltas@master
+        uses: per1234/actions/libraries/report-size-deltas@08aa4fea12ce229a1def6da8c6ca09e27a4e3dfb
