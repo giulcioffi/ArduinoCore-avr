@@ -116,7 +116,6 @@ jobs:
             - name: ArduinoCloudThing
             - name: Arduino_DebugUtils
             - name: WiFi Link
-            - name: 9 Axes Motion
             - name: Arduino_LPS22HB
             - name: CTC GO MOTIONS
             - name: ArduinoModbus
@@ -126,10 +125,10 @@ jobs:
             - name: Arduino_OAuth
             - name: CTC GO CORE
             - name: WiFi
-            - name: ArduinoMDNS
+            - source-url: https://github.com/arduino-libraries/ArduinoMDNS.git
             - name: Bridge
             - name: Temboo
-            - name: ArduinoCloud
+            - source-url: https://github.com/arduino-libraries/ArduinoCloud.git
             - name: Madgwick
             #- source-url: https://github.com/giulcioffi/ArduinoCore-avr.git
             #  version: namespaced_api
