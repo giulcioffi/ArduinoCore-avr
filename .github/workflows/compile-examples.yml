@@ -69,19 +69,6 @@ jobs:
         uses: actions/checkout@v2 
 
       # The source files are in a subfolder of the ArduinoCore-API repository, so it's not possible to clone it directly to the final destination in the core
-      - name: Checkout ArduinoCore-API
-        uses: actions/checkout@v2
-        with:
-          repository: arduino/ArduinoCore-API
-          ref: namespaced_api
-          path: extras/ArduinoCore-API
-
-      - name: Remove old symlink to api
-        run: rm "$GITHUB_WORKSPACE/cores/arduino/api"
-
-      - name: Install ArduinoCore-API
-        run: mv "$GITHUB_WORKSPACE/extras/ArduinoCore-API/api" "$GITHUB_WORKSPACE/cores/arduino"   
-
       - name: Checkout Adafruit WiFiNINA
         uses: actions/checkout@v2
         with:
