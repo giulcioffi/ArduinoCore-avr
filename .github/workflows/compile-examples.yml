@@ -73,7 +73,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: arduino/ArduinoCore-API
+          ref: namespaced_api
           path: extras/ArduinoCore-API
+
+      - name: Remove old symlink to api
+        run: rm "$GITHUB_WORKSPACE/cores/arduino/api"
 
       - name: Install ArduinoCore-API
         run: mv "$GITHUB_WORKSPACE/extras/ArduinoCore-API/api" "$GITHUB_WORKSPACE/cores/arduino"   
