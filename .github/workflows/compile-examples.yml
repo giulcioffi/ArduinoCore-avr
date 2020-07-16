@@ -66,7 +66,7 @@ jobs:
           
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v2
 
       # The source files are in a subfolder of the ArduinoCore-API repository, so it's not possible to clone it directly to the final destination in the core
       - name: Checkout Adafruit WiFiNINA
@@ -130,5 +130,7 @@ jobs:
             # Overwrite the Board Manager installation with the local platform
             - source-path: "./"
               name: "arduino:avr"
-          sketch-paths: "${{ env.UNIVERSAL_SKETCH_PATHS }} ${{ matrix.additional-sketch-paths }}"
+          list: !include addfile.yml
+          sketch-paths: "${{ list }}"
+          #"${{ env.UNIVERSAL_SKETCH_PATHS }} ${{ matrix.additional-sketch-paths }}"
           verbose: 'true'
